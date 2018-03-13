@@ -1,6 +1,6 @@
 # multimedia-systems
 
-links:
+refs:
 
   http://personal.ik.itba.edu.ar/~nbaum/Clase%20Audio%20Compression/Lossless%20Compression%20of%20Digital%20Audio_%20HP.pdf
 
