@@ -11,6 +11,7 @@
 % notice. 
 
 \documentclass{beamer}
+\usepackage{graphicx}
 
 % There are many different themes available for Beamer. A comprehensive
 % list with examples is given here:
@@ -91,66 +92,190 @@
 
 % Section and subsections will appear in the presentation overview
 % and table of contents.
-\section{ Basic principles of lossless compression}
-\subsection{Framing}
-\subsection{Intra-channel decorrelation}
-\subsection{Entropy coding}
-\subsection{Compression algorithm characeristics}
+\section{Terminology}
+\subsection{Compression}
+\begin{frame}{Terminology}{Compression}
+	\begin{itemize}
+	\item{
+		Compression is the process of lessening the dynamic range between the loudest and quietest parts of an audio signal. This is done by boosting the quieter signals and attenuating the louder signals.
+		}
+	\end{itemize}
+\end{frame}
 
-\begin{frame}{First Slide Title}{Optional Subtitle}
+
+\subsection{Compressor controls}
+\begin{frame}{Terminology}{Compressor controls}
+	\begin{itemize}
+		\item{
+				Threshold - how loud the signal has to be before compression is applied.
+			}
+			\item{
+				Ratio - how much compression is applied. For example, if the compression ratio is set for 6:1, the input signal will have to cross the threshold by 6 dB for the output level to increase by 1dB.
+			}
+			\item{
+				Attack - how quickly the compressor starts to work.
+			}
+			\item{
+				Release - how soon after the signal dips below the threshold the compressor stops.
+			}
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Terminology}{Compressor controls}
+	\begin{itemize}
+		\item{
+				Knee - sets how the compressor reacts to signals once the threshold is passed. Hard Knee settings mean it clamps the signal straight away, and Soft Knee means the compression kicks in more gently as the signal goes further past the threshold.
+			}
+			\item{
+				Make-Up Gain - allows you to boost the compressed signal. as compression often attenuates the signal significantly.
+			}
+			\item{
+				Output - allows you to boost or attenuate the level of the signal output from the compressor.
+			}
+	\end{itemize}
+\end{frame}
+
+
+\begin{frame}{Compression}
   \begin{itemize}
   \item {
-    My first point.
+    The figure is a block diagram representation of the operations involved in compressing a single channel.
   }
-  \item {
-    My second point.
+  \item{
+  	Generally, stereo or multiple channels are compressed separately.
   }
   \end{itemize}
+  \begin{figure}
+		\includegraphics[scale=0.42]{fig1.png}
+	\end{figure}  
+\end{frame}
+
+\section{ Basic principles of lossless compression}
+\subsection{Framing}
+\begin{frame}{Basic principles of lossless compression}{Framing}
+	\begin{itemize}
+		\item{
+			Framing provides editibility, a very important property for the signale to have in applications dealing with digital audio.
+		}
+		\item{
+			It is important to quickly be able to edit a compressed bit stream.
+		}
+		\item{
+			For practical purposes, the signal is divided into time frames of equal length.
+		}
+		\item{
+			Each frame has a header containing the compression parameters. These can change on a framte-to-frame basis to follow the changing characteristics of the signal.
+		}
+		\item{
+			If the frames are too short, the headers can generate a significant overhead.
+		}
+		\item{
+			If the frames are too long, we lose editibilty.
+		}
+		\item{
+			The most commonly used algorithms use a 13-26 ms time frame durations, translating into 576-1152 samples at 44.1 kHz.
+		}
+	\end{itemize}
 \end{frame}
 
 \subsection{Intra-channel decorrelation}
+\begin{frame}{The basic principles of lossless compression}{Intra-channel decorrelation}
+	\begin{itemize}
+		\item{
+			The purpose of this step is to remove redundancy by decorrelating the samples within a frame.
+		}
+		\item{
+			2 approaches:
+		}
+		\begin{enumerate}
+			\item{
+				Modified linear predictive modelling of the signal.
+			}
+			\item{
+				Obtaining a low bit-rate quantized or lossy representation of the signal, copmute the difference between the signals and losslessly compress the copmuted signal.
+			}
+		\end{enumerate}
+	\end{itemize}
+\end{frame}
+
+
 \subsection{Entropy coding}
-\subsection{Compression algorithm characeristics}
-
-\subsection{Second Subsection}
-
-% You can reveal the parts of a slide one at a time
-% with the \pause command:
-\begin{frame}{Second Slide Title}
-  \begin{itemize}
-  \item {
-    First item.
-    \pause % The slide will pause after showing the first item
-  }
-  \item {   
-    Second item.
-  }
-  % You can also specify when the content should appear
-  % by using <n->:
-  \item<3-> {
-    Third item.
-  }
-  \item<4-> {
-    Fourth item.
-  }
-  % or you can use the \uncover command to reveal general
-  % content (not just \items):
-  \item<5-> {
-    Fifth item. \uncover<6->{Extra text in the fifth item.}
-  }
-  \end{itemize}
+\begin{frame}{The basic principles of lossless compression}{Entropy coding}
+	\begin{itemize}
+		\item{
+			Entropy coding removes redundancy from the residual signal.
+		}
+		\item{
+			No information is lost during the process.
+		}
+		\item{
+			Three widely used methos: Huffman coding, run length coding, Rice conding.
+		}
+		\item{
+			We will discuss the less known of the three, Rice coding.
+		}
+	\end{itemize}
+\end{frame}
+\begin{frame}{Entropy coding}{Rice coding}
+	\begin{itemize}
+		\item{
+			Rice coding is characterized by one parameter (m).
+		}
+		\item{
+			In this type of coding, a number is divided into 3 parts: a sign bit, the m low-order bits, and the remaining higher-order bits.
+		}
+		\item{
+			The bit sign is self-explanatory, the second part consists of the m least significant beats of the binary represantation of the number's absolute value, and the third part is made of N consecutive zeros, where N has the same binary representation of the yet unused most significant bits; a 1 bit is inserted to terminate the sequence.
+		}
+		\item{
+			The table below show the Rice code representation for parameter m = 3.
+		}
+	\end{itemize}
+	\begin{figure}
+		\includegraphics[scale=0.42]{rice_coding.png}
+	\end{figure}  
 \end{frame}
 
 \section{Performance evaluation}
+\begin{frame}{Performance evaluation}{Test suite}
+	\begin{itemize}
+		\item{
+			All of the tracks are in CD format (44.1 kHz, stereo, 16 bits).
+		}
+	\end{itemize}
+	\begin{figure}
+		\includegraphics[scale=0.35]{tracks.png}
+	\end{figure}  
+\end{frame}
+\begin{frame}{Performance evaluation}{Results}
+	\begin{figure}
+		\includegraphics[scale=0.45]{results.png}
+	\end{figure} 
+\end{frame}
+\begin{frame}{Performance evaluation}{Results}
+	\begin{figure}
+		\includegraphics[scale=0.35]{results2.png}
+	\end{figure} 
+\end{frame}
+\begin{frame}{Performance evaluation}{Results}
+	\begin{figure}
+		\includegraphics[scale=0.35]{results3.png}
+	\end{figure} 
+\end{frame}
 
-\section{Encoder/decoder design}
-
-\section{Existing standards}
-\subsection{Comparison}
-
-\section{Some more technical considerations}
-\subsection{Arithmetic complexity}
-\subsection{Bit rate variability} 
+\begin{frame}{Performance evaluation}{The data}
+	\begin{itemize}
+		\item{
+			The data in tables 4 and 5 is very revealing. Firstly, we note that the compression ratios obtained by various state-of-the-art algorithms are quite similar.
+		}
+		\item{
+			The data for Track R=L shows which of the algorithms attempts to take advantage of intra-channel dependencies in a way that works best when the two channels are tightly correlated (in this case they are the same).
+		}
+		\item{
+			Finally, the tests show that WA with the -c5 consistently gives the best compression throughout the 6 tracks.
+		}
+	\end{itemize}
+\end{frame}
 
 % Placing a * after \section means it will not show in the
 % outline or table of contents.
@@ -159,55 +284,13 @@
 \begin{frame}{Summary}
   \begin{itemize}
   \item
-    The \alert{first main message} of your talk in one or two lines.
+    This study found that the \alert{currently available compression technology} has \alert{reached a limit} in what we can achieve in \alert{lossless audio compression}.
   \item
-    The \alert{second main message} of your talk in one or two lines.
+    Furthermore, in spite of the \alert{wide range of approaches and complexities} of the differenet compressors, they all \alert{perform similarly} on the same audio signals, generally with less than one bit per sample in difference.
   \item
-    Perhaps a \alert{third message}, but not more than that.
+    It is noteworthy that HP's AudioPaK has similar performance to other modern compressors while keeping the complexity and number of arithmetic operations down. It is likely that upcoming compressor designs will focus on reducing algorithm complexity.
   \end{itemize}
   
-  \begin{itemize}
-  \item
-    Outlook
-    \begin{itemize}
-    \item
-      Something you haven't solved.
-    \item
-      Something else you haven't solved.
-    \end{itemize}
-  \end{itemize}
-\end{frame}
-
-
-
-% All of the following is optional and typically not needed. 
-\appendix
-\section<presentation>*{\appendixname}
-\subsection<presentation>*{For Further Reading}
-
-\begin{frame}[allowframebreaks]
-  \frametitle<presentation>{For Further Reading}
-    
-  \begin{thebibliography}{10}
-    
-  \beamertemplatebookbibitems
-  % Start with overview books.
-
-  \bibitem{Author1990}
-    A.~Author.
-    \newblock {\em Handbook of Everything}.
-    \newblock Some Press, 1990.
- 
-    
-  \beamertemplatearticlebibitems
-  % Followed by interesting articles. Keep the list short. 
-
-  \bibitem{Someone2000}
-    S.~Someone.
-    \newblock On this and that.
-    \newblock {\em Journal of This and That}, 2(1):50--100,
-    2000.
-  \end{thebibliography}
 \end{frame}
 
 \end{document}
