@@ -1,8 +1,6 @@
-\beamer@sectionintoc {1}{Terminology}{3}{0}{1}
-\beamer@subsectionintoc {1}{1}{Compression}{3}{0}{1}
-\beamer@subsectionintoc {1}{2}{Compressor controls}{5}{0}{1}
+\beamer@sectionintoc {1}{Compression}{3}{0}{1}
 \beamer@sectionintoc {2}{ Basic principles of lossless compression}{9}{0}{2}
 \beamer@subsectionintoc {2}{1}{Framing}{9}{0}{2}
-\beamer@subsectionintoc {2}{2}{Intra-channel decorrelation}{11}{0}{2}
-\beamer@subsectionintoc {2}{3}{Entropy coding}{13}{0}{2}
-\beamer@sectionintoc {3}{Performance evaluation}{16}{0}{3}
+\beamer@subsectionintoc {2}{2}{Intra-channel decorrelation}{17}{0}{2}
+\beamer@subsectionintoc {2}{3}{Entropy coding}{23}{0}{2}
+\beamer@sectionintoc {3}{Performance evaluation}{29}{0}{3}

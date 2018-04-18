@@ -23,12 +23,12 @@
 %\usetheme{Bergen}
 %\usetheme{Berkeley}
 %\usetheme{Berlin}
-%\usetheme{Boadilla}
+\usetheme{Boadilla}
 %\usetheme{boxes}
 %\usetheme{CambridgeUS}
 %\usetheme{Copenhagen}
 %\usetheme{Darmstadt}
-\usetheme{default}
+%\usetheme{default}
 %\usetheme{Frankfurt}
 %\usetheme{Goettingen}
 %\usetheme{Hannover}
@@ -92,49 +92,37 @@
 
 % Section and subsections will appear in the presentation overview
 % and table of contents.
-\section{Terminology}
-\subsection{Compression}
-\begin{frame}{Terminology}{Compression}
+\section{Compression}
+\begin{frame}{Compression}
+	\begin{itemize}[<+->]
+	\item{
+		Audio data compression, not to be confused with dynamic range compression, has the potential to reduce the transmission bandwidth and storage requirements of audio data.
+		}
+	\item{
+		 Audio compression algorithms are implemented in software as audio codecs.
+	}
+	\item{
+		 Lossy audio compression algorithms provide higher compression at the cost of fidelity and are used in numerous audio applications. These algorithms almost all rely on psychoacoustics to eliminate or reduce fidelity of less audible sounds, thereby reducing the space required to store or transmit them.
+	}
+	\item{
+		In both lossy and lossless compression, information redundancy is reduced, using methods such as coding, pattern recognition, and linear prediction to reduce the amount of information used to represent the uncompressed data.
+	}
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Compression}
 	\begin{itemize}
 	\item{
-		Compression is the process of lessening the dynamic range between the loudest and quietest parts of an audio signal. This is done by boosting the quieter signals and attenuating the louder signals.
+		The acceptable trade-off between loss of audio quality and transmission or storage size depends upon the application. 
 		}
+	\item{
+		Lossless audio compression produces a representation of digital data that decompress to an exact digital duplicate of the original audio stream, unlike playback from lossy compression techniques.
+	}
 	\end{itemize}
+	\begin{figure}
+		\includegraphics[scale=0.42]{comp.png}
+	\end{figure} 
 \end{frame}
-
-
-\subsection{Compressor controls}
-\begin{frame}{Terminology}{Compressor controls}
-	\begin{itemize}
-		\item{
-				Threshold - how loud the signal has to be before compression is applied.
-			}
-			\item{
-				Ratio - how much compression is applied. For example, if the compression ratio is set for 6:1, the input signal will have to cross the threshold by 6 dB for the output level to increase by 1dB.
-			}
-			\item{
-				Attack - how quickly the compressor starts to work.
-			}
-			\item{
-				Release - how soon after the signal dips below the threshold the compressor stops.
-			}
-	\end{itemize}
-\end{frame}
-
-\begin{frame}{Terminology}{Compressor controls}
-	\begin{itemize}
-		\item{
-				Knee - sets how the compressor reacts to signals once the threshold is passed. Hard Knee settings mean it clamps the signal straight away, and Soft Knee means the compression kicks in more gently as the signal goes further past the threshold.
-			}
-			\item{
-				Make-Up Gain - allows you to boost the compressed signal. as compression often attenuates the signal significantly.
-			}
-			\item{
-				Output - allows you to boost or attenuate the level of the signal output from the compressor.
-			}
-	\end{itemize}
-\end{frame}
-
 
 \begin{frame}{Compression}
   \begin{itemize}
@@ -153,7 +141,7 @@
 \section{ Basic principles of lossless compression}
 \subsection{Framing}
 \begin{frame}{Basic principles of lossless compression}{Framing}
-	\begin{itemize}
+	\begin{itemize}[<+->]
 		\item{
 			Framing provides editibility, a very important property for the signale to have in applications dealing with digital audio.
 		}
@@ -180,7 +168,7 @@
 
 \subsection{Intra-channel decorrelation}
 \begin{frame}{The basic principles of lossless compression}{Intra-channel decorrelation}
-	\begin{itemize}
+	\begin{itemize}[<+->]
 		\item{
 			The purpose of this step is to remove redundancy by decorrelating the samples within a frame.
 		}
@@ -192,16 +180,25 @@
 				Modified linear predictive modelling of the signal.
 			}
 			\item{
-				Obtaining a low bit-rate quantized or lossy representation of the signal, copmute the difference between the signals and losslessly compress the copmuted signal.
+				Obtaining a low bit-rate quantized or lossy representation of the signal, compute the difference between the signals and losslessly compress the computed signal.
 			}
 		\end{enumerate}
 	\end{itemize}
 \end{frame}
 
 
+\begin{frame}{Intra-channel decorrelation}{Linear predictive model}
+	\begin{figure}
+		\includegraphics[scale=0.42]{response.png}
+	\end{figure}
+	\begin{figure}
+		\includegraphics[scale=0.42]{formula.png}
+	\end{figure}
+\end{frame}
+
 \subsection{Entropy coding}
 \begin{frame}{The basic principles of lossless compression}{Entropy coding}
-	\begin{itemize}
+	\begin{itemize}[<+->]
 		\item{
 			Entropy coding removes redundancy from the residual signal.
 		}
@@ -225,10 +222,10 @@
 			In this type of coding, a number is divided into 3 parts: a sign bit, the m low-order bits, and the remaining higher-order bits.
 		}
 		\item{
-			The bit sign is self-explanatory, the second part consists of the m least significant beats of the binary represantation of the number's absolute value, and the third part is made of N consecutive zeros, where N has the same binary representation of the yet unused most significant bits; a 1 bit is inserted to terminate the sequence.
+			The bit sign is self-explanatory, the second part consists of the m least significant bits of the binary representation of the number's absolute value, and the third part is made of N consecutive zeros, where N has the same binary representation of the yet unused most significant bits; a 1 bit is inserted to terminate the sequence.
 		}
 		\item{
-			The table below show the Rice code representation for parameter m = 3.
+			The table below show the Rice code representation for parameter m=3.
 		}
 	\end{itemize}
 	\begin{figure}
@@ -264,7 +261,7 @@
 \end{frame}
 
 \begin{frame}{Performance evaluation}{The data}
-	\begin{itemize}
+	\begin{itemize}[<+->]
 		\item{
 			The data in tables 4 and 5 is very revealing. Firstly, we note that the compression ratios obtained by various state-of-the-art algorithms are quite similar.
 		}
@@ -282,7 +279,7 @@
 \section*{Summary}
 
 \begin{frame}{Summary}
-  \begin{itemize}
+  \begin{itemize}[<+->]
   \item
     This study found that the \alert{currently available compression technology} has \alert{reached a limit} in what we can achieve in \alert{lossless audio compression}.
   \item
